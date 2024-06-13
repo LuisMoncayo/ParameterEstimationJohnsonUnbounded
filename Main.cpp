@@ -1,6 +1,5 @@
 #include <Eigen/Core>
 #include <iostream>
-//#include <fstream>
 #include <nr3.h>
 #include <LBFGSB1.h>
 #include <fungammabeta.h>
@@ -69,12 +68,12 @@ inline double InSinh(const double& A, const double& B)
     else return Value;
 }
 /* ---------------------------------------------------------------------
-   Calcula estimadores de una Johnson SU por m·xima verosimilitud
-   dados par·metros de traslado y escala
+   Calcula estimadores de una Johnson SU por m√°xima verosimilitud
+   dados par√°metros de traslado y escala
    ---------------------------------------------------------------------*/
 bool FitJoUMuSt(const int& N1, Vector Value, const double& Shift, const double& Mult, double& MuN, double& StDevN)
-{//Estima los par·metros de una distribuciÛn Johnson no acotada.
- //Entrada: N1, Value, Shift, Mult. Salida: MuN, StDevN, Shift debe ser menor que MÌnimo Value
+{//Estima los par√°metros de una distribuci√≥n Johnson no acotada.
+ //Entrada: N1, Value, Shift, Mult. Salida: MuN, StDevN, Shift debe ser menor que M√≠nimo Value
     if ((Mult <= 0.0) || (N1 < 2)) return false;
     double LogMult = log(Mult);
     MuN = 0.0; StDevN = 0.0;
@@ -99,7 +98,7 @@ double MultJo(const double& X)
 }
 Scalar TryInvalC(const int& N1, const int& I1, Vector Value, const double& Quan1, const double& Quan2,
     const double& Quan3, double& MuY, double& SigmaY, double& Shift, double& Mult)
-{// To try initial value for Shift = Value[i], and CramÈr-von Mises
+{// To try initial value for Shift = Value[i], and Cram√©r-von Mises
     Shift = Value[I1];
     FunJo1 = Quan1 - Shift;				FunJo2 = Quan2 - Shift;				FunJo3 = Quan3 - Shift;
     Doub Tol = 3.0e-8, MaxA = abs(FunJo3), B1 = abs(FunJo1);
@@ -115,7 +114,7 @@ Scalar TryInvalC(const int& N1, const int& I1, Vector Value, const double& Quan1
     return CvM;
 }
 int InValC(const int& N1, Vector Value, double& MuY, double& SigmaY, double& ShiftY, double& MultY)
-{// Initial Johnson parameters from quantiles trying to minimize CramÈr-von Mises
+{// Initial Johnson parameters from quantiles trying to minimize Cram√©r-von Mises
 // Computation of quantiles
     if (N1 < 5) return -1;
     double XN = static_cast<double>(N1);
@@ -146,7 +145,7 @@ int InValC(const int& N1, Vector Value, double& MuY, double& SigmaY, double& Shi
    Calcula estimadores de forma de una Johnson SU
    ---------------------------------------------------------------------*/
 bool FitParWheeler(const int& N1, const Vector Value, Scalar& MuN, Scalar& StDevN)
-{//Estima los par·metros de forma de una distribuciÛn Johnson no acotada.
+{//Estima los par√°metros de forma de una distribuci√≥n Johnson no acotada.
  //Entrada: N1, Value. Salida: MuN, StDevN
     if (N1 < 5) return false;
     MuN = 0.0; StDevN = 1.0;
